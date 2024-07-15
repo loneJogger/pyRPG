@@ -1,2 +1,2 @@
-# pyRPG
-an extremely simple terminal based RPG for python. 
+# terminal JS RPG
+an extremely simple terminal based RPG for node. 
