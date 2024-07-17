@@ -1,17 +1,13 @@
 import terminal from './lib/terminal.js'
-import openingScene from './scenes/00_opening.js'
+import demoScene from './scenes/00_demo.js'
 
 // on startup
-console.clear()
-console.log('')
-console.log('**********************')
-console.log('**    SIMPLE RPG    **')
-console.log('**********************')
-console.log('')
-console.log('')
-await terminal.awaitInput('Press ENTER to continue.')
-console.clear()
+;(async () => {
+    console.clear()
+    await terminal.awaitInput('Press ENTER to continue.')
+    console.clear()
+    await demoScene()
+})()
 
-await openingScene()
 
 
