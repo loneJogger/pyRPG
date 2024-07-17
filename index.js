@@ -1,12 +1,24 @@
-import terminal from './lib/terminal.js'
-import demoScene from './scenes/00_demo.js'
+import titleScene from './scenes/01_title.js'
 
 // on startup
 ;(async () => {
+    let input = -1
     console.clear()
-    await terminal.awaitInput('Press ENTER to continue.')
+    input = await titleScene()
     console.clear()
-    await demoScene()
+    switch (input) {
+        case '1':
+            console.log('NEW GAME SELECTED')
+            break
+        case '2':
+            console.log('LOAD SELECTED')
+            break
+        case '3':
+            console.log('EXIT SELECTED')
+            break
+        default:
+            console.log('whoops!')
+    }
 })()
 
 

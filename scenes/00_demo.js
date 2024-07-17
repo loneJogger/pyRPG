@@ -1,6 +1,5 @@
 import terminal from '../lib/terminal.js'
 
-
 export default async () => {
     await terminal.typewriterOutput('Hello, and welcome to the game!', 75)
     await terminal.awaitInput('')
