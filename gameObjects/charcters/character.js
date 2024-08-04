@@ -1,7 +1,5 @@
-import { CharClass } from "./charClass.js"
-
 const DICE = 10
-const HARD_CAP = 100
+const HARD_CAP = 255
 const SOFT_CAP = 50
 
 export default class Character {
@@ -9,7 +7,7 @@ export default class Character {
     constructor(options) {
         this.name = options.name || 'DEFAULT_NAME'
         this.level = options.level || 1
-        this.charClass = options.charClass || new CharClass()
+        this.charClass = options.charClass || 'NO CLASS'
         this.hp = options.hp || { total: 10, current: 10 }
         this.ap = options.ap || { total: 0, current: 0 }
         this.status = options.status || []
@@ -21,6 +19,16 @@ export default class Character {
             spirit: 1,
             dexterity: 1,
             luck: 1
+        }
+        this.growth = options.growth || {
+            hp: { m: 0.5, b: 1 },
+            ap: { m: 0.5, b: 1 },
+            str: { m: 0.5, b: 1 },
+            int: { m: 0.5, b: 1 },
+            def: { m: 0.5, b: 1 },
+            spr: { m: 0.5, b: 1 },
+            dex: { m: 0.5, b: 1 },
+            luk: { m: 0.5, b: 1 },
         }
         this.resistences = options.resistences || {
             fire: 1.0,
@@ -46,11 +54,23 @@ export default class Character {
         }
         this.bonuses = options.bonuses || []
         this.actions = options.actions || []
+        this.actions.push({
+            name: 'Attack',
+            learn_level: 1
+        })
+        this.actions.push({
+            name: 'Defend',
+            learn_level: 1
+        })
+        this.actions.push({
+            name: 'Item',
+            learn_level: 1
+        })
         this.techniques = options.techniques || []
     }
 
     setlevel (level) {
-        const { hp, ap, str, int, def, spr, dex, luk } = this.charClass.growth
+        const { hp, ap, str, int, def, spr, dex, luk } = this.growth
         this.level = level
         this.hp = Math.ceil(hp.m * level) + hp.b
         this.ap = Math.ceil(ap.m * level) + ap.b
