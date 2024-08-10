@@ -1,7 +1,10 @@
-import Character from './../character'
+import Character from './../character.js'
+import { Armor, Sword, Shield } from '../../items/equipment.js'
+import { UsableItem } from '../../items/item.js'
 
 export class Knight extends Character {
     constructor(options) {
+        super(options)
         this.name = 'Bonnie'
         this.level = options.level || 1
         this.charClass = 'Knight'
@@ -36,22 +39,10 @@ export class Knight extends Character {
             blunt: 1.125,
             shoot: 1.0
         }
-        // todo: design some gear
-        this.items = []
-        this.equipment = {
-            main_hand: null,
-            off_hand: null,
-            head: null,
-            body: null,
-            feet: null,
-            accessory_1: null,
-            accessory_2: null,
-            accessory_3: null,
-        }
         this.bonuses = [
             {
                 name: 'Parry',
-                learn_level: 5,
+                learn_level: 4,
                 description: ''
             }
         ]
@@ -79,6 +70,24 @@ export class Knight extends Character {
                 learn_level: 2
             }
         ]  
+    }
+
+    giveStartingGear() {
+         // todo: design some gear
+         this.items = [
+            ...this.items,
+            new UsableItem({ stackSize: 3 }), 
+        ]
+         this.equipment = {
+             main_hand: new Sword(),
+             off_hand: new Shield(),
+             head: null,
+             body: new Armor(),
+             feet: null,
+             accessory_1: null,
+             accessory_2: null,
+             accessory_3: null,
+         }
     }
 
     parry() {}

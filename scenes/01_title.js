@@ -29,7 +29,7 @@ export default async () => {
     console.log('')
     console.log('')
     await terminal.awaitInput(`${terminal.colors.special.blink}                           Press ENTER to continue.${terminal.colors.special.reset}`)
-    while (option < 1 || option > 3) {
+    while (!['1', '2', '3'].includes(option)) {
         console.clear()
         drawTitle()
         console.log('')

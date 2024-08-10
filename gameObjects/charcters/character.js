@@ -1,3 +1,5 @@
+import { Equipment } from "../items/equipment.js"
+
 const DICE = 10
 const HARD_CAP = 255
 const SOFT_CAP = 50
@@ -139,11 +141,43 @@ export default class Character {
     }
 
     checkDodge () {
-        return this.randomInt(HARD_CAP) > HARD_CAP - this.attributes.dexterity ? true : false
+        const offHandDex = this.equipment.off_hand.dexterity || 0
+        return this.randomInt(HARD_CAP) > HARD_CAP - this.attributes.dexterity + offHandDex ? true : false
     }
 
-    randomInt(max_number) {
+    randomInt (max_number) {
         Math.floor(Math.random() * max_number)
     }
 
+    attack () {}
+
+    defend () {}
+
+    item () {}
+
+    showEquipable () {
+        return this.items.filter(e => e instanceof Equipment && e.charClasses.includes(this.charClass))
+    }
+
+    equip (item, gearType) {
+        if (this.equipment[gearType]) {
+            this.items.push(this.equipment[gearType])
+        }
+        this.equipment[gearType] = item
+        if (item.stackSize > 1) {
+            item.stackSize -= 1
+        } else {
+            const i = this.items.findIndex(e => e.name === item.name)
+            this.items = [ ...this.items.slice(0, i), ...this.items.slice(i) ]
+        }
+    }
+
+    unequip (item, gearType) {
+        if (item.stackSize = 1) {
+            this.items.push(item)
+        } else {
+            item.stackSize += 1
+        }
+        this.equipment[gearType] = null
+    }
 }
