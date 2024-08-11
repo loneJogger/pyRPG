@@ -1,5 +1,7 @@
-import { Player } from './gameObjects/player.js';
-import { Knight } from './gameObjects/charcters/pc/knight.js';
+import { Player } from './gameObjects/player.js'
+import { Knight } from './gameObjects/charcters/pc/knight.js'
+import { Wizard } from './gameObjects/charcters/pc/wizard.js'
+import { Priest } from './gameObjects/charcters/pc/priest.js'
 
 import titleScene from './scenes/01_title.js'
 import newGameScene from './scenes/02_start_new_game.js'
@@ -15,11 +17,13 @@ import newGameScene from './scenes/02_start_new_game.js'
             console.clear()
             const player = new Player({ party: { 
                 first: new Knight(),
-                second: null,
-                third: null,
+                second: new Priest(),
+                third: new Wizard(),
                 forth: null
             }})
             player.props.party.first.setStartingGear()
+            player.props.party.second.setStartingGear()
+            player.props.party.third.setStartingGear()
             await newGameScene(player)
             break
         case '2':

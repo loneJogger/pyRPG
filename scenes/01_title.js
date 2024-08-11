@@ -33,9 +33,8 @@ export default async () => {
         console.clear()
         drawTitle()
         console.log('')
-        console.log('1. New Game')
-        console.log('2. Load Data')
-        console.log('3. Exit')
+        console.log('1. New Game   2. Load Data   3. Exit')
+        console.log('')
         option = await terminal.awaitInput('Choose a numerical option: ')
     }
     return option

@@ -1,20 +1,21 @@
 import Character from '../character.js'
-import { Armor, Sword, Shield } from '../../items/equipment.js'
+import { Armor } from '../../items/equipment.js'
 import { UsableItem } from '../../items/item.js'
 
 const defaults = {
-    name: 'Bonnie',
-    char_class: 'Knight',
-    hp: { total: 28, current: 28 },
-    ap: { total: 8, current: 8 },
+    name: 'Tecla',
+    char_class: 'Wizard',
+    hp: { total: 24, current: 24 },
+    ap: { total: 13, current: 13 },
     attributes: {
-        strength: 12,
-        intelligence: 6,
-        defense: 10,
-        spirit: 6,
-        dexterity: 7,
-        luck: 7
+        strength: 5,
+        intelligence: 9,
+        defense: 7,
+        spirit: 13,
+        dexterity: 8,
+        luck: 10
     },
+    // todo: rewrite for wizard
     growth: {
         hp: { m: 7.5, b: 20 },  // lvl. 1: 28, lvl. 99: 763
         ap: { m: 1.5, b: 6 },   // lvl. 1:  8, lvl. 99: 155
@@ -69,30 +70,11 @@ const defaults = {
     ]  
 }
 
-export class Knight extends Character {
+export class Wizard extends Character {
 
     constructor(props) {
         super({ ...defaults, ...props })     
     }
 
-    setStartingGear() {
-        let { items, equipment } = this.props
-        items = [
-            new UsableItem({ stackSize: 3 }), 
-        ]
-        equipment = {
-            main_hand: new Sword(),
-            off_hand: new Shield(),
-            head: null,
-            body: new Armor(),
-            feet: null,
-            accessory_1: null,
-            accessory_2: null,
-            accessory_3: null,
-        }
-    }
-
-    getParry() {}
-
-    execBodyguard() {}
+    setStartingGear() {}
 }
