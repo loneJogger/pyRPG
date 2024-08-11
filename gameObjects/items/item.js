@@ -1,4 +1,4 @@
-const defaultItem = {
+const defaults = {
     name: '!NO_ITEM_NAME!',
     description: '!NO_ITEM_DESC!',
     value: 1,
@@ -22,7 +22,7 @@ const defaultUsableItem = {
 export class Item {
 
     constructor(props) {
-        this.props = { ...defaultItem, ...props }
+        this.props = { ...defaults, ...props }
     }
 }
 
