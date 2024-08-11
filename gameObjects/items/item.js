@@ -1,32 +1,40 @@
+const defaultItem = {
+    name: '!NO_ITEM_NAME!',
+    description: '!NO_ITEM_DESC!',
+    value: 1,
+    sellable: true,
+    stackSize: 1
+}
+
+const defaultUsableItem = {
+    name: 'Green Herb',
+    description: 'A pale, green and leafy herb. Restores a small amount of HP.',
+    value: 10,
+    whenUsed: [
+        {
+            effect: 'restore',
+            propertry: 'hp',
+            amount: 15
+        }
+    ]
+}
+
 export class Item {
 
-    constructor(options) {
-        this.name = options.name || 'DEFAULT_NAME'
-        this.description = options.description || 'DEFAULT_DESCRIPTION'
-        this.value = options.value || 1
-        this.sellable = options.sellable || true
-        this.stackSize = options.stackSize || 1
+    constructor(props) {
+        this.props = { ...defaultItem, ...props }
     }
 }
 
 export class UsableItem extends Item {
 
-    constructor(options) {
-        super(options)
-        this.name = options.name || 'Green Herb'
-        this.description = options.description || 'A pale, green and leafy herb. Restores a small amount of HP.',
-        this.value = options.value || 10
-        this.whenUsed = options.whenUsed || [
-            {
-                effect: 'restore',
-                propertry: 'hp',
-                amount: 15
-            }
-        ]
+    constructor(props) {
+        super(props)
+        this.props = { ...defaultUsableItem, props }
     }
 
-    restore (target, effect) {
-        const { total, current } = target[effect.propertry]
+    getRestore (target, effect) {
+        const { total, current } = target.props[effect.propertry]
         let newValue = current + effect.amount
         if (newValue <= total) {
             return newValue

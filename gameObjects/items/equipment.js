@@ -1,49 +1,66 @@
 import { Item } from './item.js'
 
+const defaults = {
+    gear_type: '!NO_GEAR_TYPE!',
+    element: '!NO_ELEMENT!',
+    bonuses: [],
+    char_classes: ['Knight']
+}
+
+const defaultSword = {
+    name: 'Iron Short Sword',
+    description: 'ATK + 2\nA simple iron sword. Standard issue for initiate level Knights of the Faith.',
+    gear_type: 'main_hand',
+    element: 'slash',
+    value: 50,
+    damage: 2
+}
+
+const defaultShield = {
+    name: 'Wooden Round Shield',
+    description: 'DEF + 2 DEX + 1\nA light weight wooden shield bearing the crest of a nobel family.',
+    gear_type: 'off_hand',
+    value: 25,
+    defense: 2,
+    dexterity: 1
+}
+
+const defaultArmor = {
+    name: 'Old Mail',
+    description: 'DEF + 3\nAn old chain mail coat.',
+    gear_type: 'body',
+    value: 25,
+    defense: 3
+}
+
 export class Equipment extends Item{
 
-    constructor(options) {
-        super(options)
-        this.gear_type = options.gear_type || 'main_hand'
-        this.element = options.element || ''
-        this.bonuses = options.bonuses || []
-        this.charClasses = options.charClasses || []
+    constructor(props) {
+        super(props)
+        this.props = { ...defaults, props }
     }
 }
 
 export class Sword extends Equipment {
-    constructor(options) {
-        super(options)
-        this.name = options.name || 'Iron Short Sword' 
-        this.description = options.description || 'ATK + 2\nA simple iron sword. Standard issue for initiate level Knights of the Faith.'
-        this.value = options.value || 50
-        this.element = options.element || 'slash'
-        this.charClasses = options.charClasses || ['Knight'],
-        this.damage = options.damage || 2
+
+    constructor(props) {
+        super(props)
+        this.props = { ...defaultSword, props }
     }
 }
 
 export class Shield extends Equipment {
-    constructor(options) {
-        super(options)
-        this.name = options.name || 'Wooden Round Shield'
-        this.description = options.description || 'DEF + 2 DEX + 1\nA light weight wooden shield bearing the crest of a nobel family.'
-        this.gear_type = 'off_hand'
-        this.value = options.value = 25
-        this.charClasses = options.charClasses || ['Knight']
-        this.defense = options.defense || 2
-        this.dexterity = options.dexterity || 1
+
+    constructor(props) {
+        super(props)
+        this.props = { ...defaultShield, props }
     }
 }
 
 export class Armor extends Equipment {
-    constructor(options) {
-        super(options)
-        this.name = options.name || 'Chain Mail'
-        this.description = options.description || 'DEF + 3\nAn old chain mail coat.'
-        this.gear_type = 'body'
-        this.value = options.value || 25
-        this.charClasses = options.charClasses || ['Knight']
-        this.defense = options.defense || 3
+
+    constructor(props) {
+        super(props)
+        this.props = { ...defaultArmor, props }
     }
 }
