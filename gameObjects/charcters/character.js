@@ -1,183 +1,179 @@
+import { randomInt } from "../../lib/lib.js"
 import { Equipment } from "../items/equipment.js"
 
 const DICE = 10
 const HARD_CAP = 255
 const SOFT_CAP = 50
 
-export default class Character {
-
-    constructor(options) {
-        this.name = options.name || 'DEFAULT_NAME'
-        this.level = options.level || 1
-        this.charClass = options.charClass || 'NO CLASS'
-        this.hp = options.hp || { total: 10, current: 10 }
-        this.ap = options.ap || { total: 0, current: 0 }
-        this.status = options.status || []
-        this.modifiers = []
-        this.attributes = options.attributes || {
-            strength: 1,
-            intelligence: 1,
-            defense: 1,
-            spirit: 1,
-            dexterity: 1,
-            luck: 1
-        }
-        this.growth = options.growth || {
-            hp: { m: 0.5, b: 1 },
-            ap: { m: 0.5, b: 1 },
-            str: { m: 0.5, b: 1 },
-            int: { m: 0.5, b: 1 },
-            def: { m: 0.5, b: 1 },
-            spr: { m: 0.5, b: 1 },
-            dex: { m: 0.5, b: 1 },
-            luk: { m: 0.5, b: 1 },
-        }
-        this.resistences = options.resistences || {
-            fire: 1.0,
-            water: 1.0,
-            earth: 1.0,
-            air: 1.0,
-            light: 1.0,
-            dark: 1.0,
-            slash: 1.0,
-            blunt: 1.0,
-            shoot: 1.0
-        }
-        this.items = options.items || []
-        this.equipment = options.equipment || {
-            main_hand: null,
-            off_hand: null,
-            head: null,
-            body: null,
-            feet: null,
-            accessory_1: null,
-            accessory_2: null,
-            accessory_3: null,
-        }
-        this.bonuses = options.bonuses || []
-        this.actions = options.actions || []
-        this.actions.push({
+const defaults = {
+    name: '!UNNAMED_CHAR!',
+    level: 1,
+    char_class: '!NO_CLASS!',
+    hp: { total: 10, current: 10 },
+    ap: { total: 0, current: 0 },
+    states: [],
+    modifiers: [],
+    attributes: {
+        strength: 1,
+        intelligence: 1,
+        defense: 1,
+        spirit: 1,
+        dexterity: 1,
+        luck: 1
+    },
+    growth: {
+        hpg: { m: 0.5, b: 1 },
+        apg: { m: 0.5, b: 1 },
+        str: { m: 0.5, b: 1 },
+        int: { m: 0.5, b: 1 },
+        def: { m: 0.5, b: 1 },
+        spr: { m: 0.5, b: 1 },
+        dex: { m: 0.5, b: 1 },
+        luk: { m: 0.5, b: 1 },
+    },
+    resistences: {
+        fire: 1.0,
+        water: 1.0,
+        earth: 1.0,
+        air: 1.0,
+        light: 1.0,
+        dark: 1.0,
+        slash: 1.0,
+        blunt: 1.0,
+        shoot: 1.0
+    },
+    items: [],
+    equipment: {
+        main_hand: null,
+        off_hand: null,
+        head: null,
+        body: null,
+        feet: null,
+        accessory_1: null,
+        accessory_2: null,
+        accessory_3: null,
+    },
+    bounses: [],
+    actions: [
+        {
             name: 'Attack',
             learn_level: 1
-        })
-        this.actions.push({
+        },
+        {
             name: 'Defend',
             learn_level: 1
-        })
-        this.actions.push({
+        },
+        {
             name: 'Item',
             learn_level: 1
-        })
-        this.techniques = options.techniques || []
+        }
+    ],
+    techniques: []
+}
+
+export default class Character {
+
+    constructor(props) {
+        this.props = { ...defaults, ...props }
     }
 
-    setlevel (level) {
-        const { hp, ap, str, int, def, spr, dex, luk } = this.growth
-        this.level = level
-        this.hp = Math.ceil(hp.m * level) + hp.b
-        this.ap = Math.ceil(ap.m * level) + ap.b
-        this.attributes.strength = Math.ceil(str.m * level) + str.b
-        this.attributes.intelligence = Math.ceil(int.m * level) + int.b
-        this.attributes.defense = Math.ceil(def.m * level) + def.b
-        this.attributes.spirit = Math.ceil(spr.m * level) + spr.b
-        this.attributes.dexterity = Math.ceil(dex.m * level) + dex.b
-        this.attributes.luck = Math.ceil(luk.m * level) + luk.b
-        this.bonuses = []
-        for (const bonus of this.charClass.bonuses) {
-            if (level >= bonus.learn_level) {
-                this.bonuses.push(bonus)
-            }
-        }
-        this.actions = []
-        for (const action of this.charClass.actions) {
-            if (level >= action.learn_level) {
-                this.actions.push(action)
-            }
-        }
-        this.techniques = []
-        for (const technique of this.charClass.techniques) {
-            if (level >= technique.learn_level) {
-                this.techniques.push(technique)
-            }
-        }
+    setlevel (newLevel) {
+        const { hp, ap } = this.props
+        let { level } = this.props
+        const { hpg, apg, str, int, def, spr, dex, luk } = this.props.growth
+        let { strength, intelligence, defense, spirit, dexterity, luck } = this.props.attributes
+        level = newLevel
+        hp.total = Math.ceil(hpg.m * level) + hpg.b
+        ap.total = Math.ceil(apg.m * level) + apg.b
+        strength = Math.ceil(str.m * level) + str.b
+        intelligence = Math.ceil(int.m * level) + int.b
+        defense = Math.ceil(def.m * level) + def.b
+        spirit = Math.ceil(spr.m * level) + spr.b
+        dexterity = Math.ceil(dex.m * level) + dex.b
+        luck = Math.ceil(luk.m * level) + luk.b
     }
 
-    calcAttack () {
+    getAttack () {
+        const { attributes, equipment } = this.props
         const roll = randomInt(DICE)
-        const critMultiplier = this.randomInt(HARD_CAP) > HARD_CAP - this.attributes.luck ? 2 : 1
-        const weaponBonus = this.equipment.main_hand ? Math.ceil(this.equipment.main_hand.damage) : 0
-        if (this.equipment.main_hand) {
+        const critMultiplier = randomInt(HARD_CAP) > HARD_CAP - attributes.luck ? 2 : 1
+        if (equipment.main_hand) {
+            const weaponBonus = Math.ceil(equipment.main_hand.damage)
             return { 
-                damage: (roll + Math.ciel(this.attributes.strength / 2) + weaponBonus) * critMultiplier, 
-                element:  this.equipment.main_hand.element
+                damage: (roll + Math.ciel(attributes.strength / 2) + weaponBonus) * critMultiplier, 
+                element:  equipment.main_hand.element
+            }
+        } else {
+            return { 
+                damage: (roll + Math.ciel(attributes.strength / 2)) * critMultiplier,
+                element: '!NO_ELEMENT!'
             }
         }
-        return { 
-            damage: (roll + Math.ciel(this.attributes.strength / 2) + weaponBonus) * critMultiplier,
-            element: 'none'
-        }
     }
 
-    calcAtkReduce (element) {
-        const offHandDef = this.equipment.off_hand.defense || 0
-        const headDef = this.equipment.head.defense || 0
-        const bodyDef = this.equipment.body.defense || 0
-        const feetDef = this.equipment.feet.defense || 0
+    getAtkReduce (element) {
+        const { attributes, resistences, equipment } = this.props
+        const offHandDef = equipment.off_hand.defense || 0
+        const headDef = equipment.head.defense || 0
+        const bodyDef = equipment.body.defense || 0
+        const feetDef = equipment.feet.defense || 0
         if (element) {
-            return offHandDef + headDef + bodyDef + feetDef + Math.ceil(this.attributes.defense / 2) * this.resistences[element]
+            return offHandDef + headDef + bodyDef + feetDef + Math.ceil(attributes.defense / 2) * resistences[element]
         }
-        return offHandDef + headDef + bodyDef + feetDef + Math.ceil(this.attributes.defense / 2)
+        return offHandDef + headDef + bodyDef + feetDef + Math.ceil(attributes.defense / 2)
     }
 
-    calcMagReduce (element) {
-        const offHandSpt = this.equipment.off_hand.spirit || 0
-        const headSpt = this.equipment.head.spirit || 0
-        const bodySpt = this.equipment.body.spirit || 0
-        const feetSpt = this.equipment.feet.spirit || 0
+    getMagReduce (element) {
+        const { attributes, resistences, equipment } = this.props
+        const offHandSpt = equipment.off_hand.spirit || 0
+        const headSpt = equipment.head.spirit || 0
+        const bodySpt = equipment.body.spirit || 0
+        const feetSpt = equipment.feet.spirit || 0
         if (element) {
-            return offHandSpt + headSpt + bodySpt + feetSpt + Math.ceil(this.attributes.spirit / 2) * this.resistences[element]
+            return offHandSpt + headSpt + bodySpt + feetSpt + Math.ceil(attributes.spirit / 2) * resistences[element]
         }
-        return offHandSpt + headSpt + bodySpt + feetSpt + Math.ceil(this.attributes.spirit / 2)
+        return offHandSpt + headSpt + bodySpt + feetSpt + Math.ceil(attributes.spirit / 2)
     }
 
-    checkDodge () {
-        const offHandDex = this.equipment.off_hand.dexterity || 0
-        return this.randomInt(HARD_CAP) > HARD_CAP - this.attributes.dexterity + offHandDex ? true : false
+    isDodged () {
+        const { attributes, equipment } = this.props
+        const offHandDex = equipment.off_hand.dexterity || 0
+        return randomInt(HARD_CAP) > HARD_CAP - attributes.dexterity + offHandDex ? true : false
     }
 
-    randomInt (max_number) {
-        Math.floor(Math.random() * max_number)
+    execAttack () {}
+
+    execDefend () {}
+
+    execUseItem () {}
+
+    getEquipable () {
+        const { items } = this.props
+        return items.filter(e => e instanceof Equipment && e.charlasses.includes(this.charClass))
     }
 
-    attack () {}
-
-    defend () {}
-
-    item () {}
-
-    showEquipable () {
-        return this.items.filter(e => e instanceof Equipment && e.charClasses.includes(this.charClass))
-    }
-
-    equip (item, gearType) {
-        if (this.equipment[gearType]) {
-            this.items.push(this.equipment[gearType])
+    setEquip (item, gearType) {
+        const { equipment } = this.props
+        let { items } = this.props
+        if (equipment[gearType]) {
+            items.push(equipment[gearType])
         }
-        this.equipment[gearType] = item
+        equipment[gearType] = item
         if (item.stackSize > 1) {
             item.stackSize -= 1
         } else {
-            const i = this.items.findIndex(e => e.name === item.name)
-            this.items = [ ...this.items.slice(0, i), ...this.items.slice(i) ]
+            const i = items.findIndex(e => e.name === item.name)
+            items = [ ...items.slice(0, i), ...items.slice(i) ]
         }
     }
 
-    unequip (item, gearType) {
+    SetUnequipped (item, gearType) {
+        const { items, equipment } = this.props
         if (item.stackSize = 1) {
-            this.items.push(item)
+            items.push(item)
         } else {
             item.stackSize += 1
         }
-        this.equipment[gearType] = null
+        equipment[gearType] = null
     }
 }
