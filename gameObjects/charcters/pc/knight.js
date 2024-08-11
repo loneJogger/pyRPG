@@ -72,14 +72,14 @@ const defaults = {
 export class Knight extends Character {
 
     constructor(props) {
-        super(props)
-        this.props = { ...defaults, ...props }
+        super({ ...defaults, ...props })
+        
     }
 
     setStartingGear() {
         let { items, equipment } = this.props
         items = [
-            ...new UsableItem({ stackSize: 3 }), 
+            new UsableItem({ stackSize: 3 }), 
         ]
         equipment = {
             main_hand: new Sword(),

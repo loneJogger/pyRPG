@@ -29,8 +29,7 @@ export class Item {
 export class UsableItem extends Item {
 
     constructor(props) {
-        super(props)
-        this.props = { ...defaultUsableItem, props }
+        super({ ...defaultUsableItem, props })
     }
 
     getRestore (target, effect) {

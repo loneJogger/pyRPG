@@ -10,6 +10,6 @@ const defaults = {
 export class Player {
     
     constructor(props) {
-        this.props = { ...defaults, props }
+        this.props = { ...defaults, ...props }
     }
 }

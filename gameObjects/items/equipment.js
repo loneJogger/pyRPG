@@ -36,31 +36,27 @@ const defaultArmor = {
 export class Equipment extends Item{
 
     constructor(props) {
-        super(props)
-        this.props = { ...defaults, props }
+        super({ ...defaults, props }) 
     }
 }
 
 export class Sword extends Equipment {
 
     constructor(props) {
-        super(props)
-        this.props = { ...defaultSword, props }
+        super({ ...defaultSword, props })
     }
 }
 
 export class Shield extends Equipment {
 
     constructor(props) {
-        super(props)
-        this.props = { ...defaultShield, props }
+        super({ ...defaultShield, props })
     }
 }
 
 export class Armor extends Equipment {
 
     constructor(props) {
-        super(props)
-        this.props = { ...defaultArmor, props }
+        super({ ...defaultArmor, props })
     }
 }

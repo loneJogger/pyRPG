@@ -19,7 +19,7 @@ import newGameScene from './scenes/02_start_new_game.js'
                 third: null,
                 forth: null
             }})
-            player.party.first.giveStartingGear()
+            player.props.party.first.setStartingGear()
             await newGameScene(player)
             break
         case '2':
