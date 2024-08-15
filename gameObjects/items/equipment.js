@@ -30,7 +30,17 @@ const defaultArmor = {
     description: 'DEF + 3\nAn old chain mail coat.',
     gear_type: 'body',
     value: 25,
-    defense: 3
+    defense: 3,
+    spirit: 0
+}
+
+const defaultHat = {
+    name: 'Pointed Hat',
+    description: 'SPR + 1\nA dark pointed hat with a wide brim.',
+    gear_type: 'head',
+    value: 20,
+    defense: 0,
+    spirit: 1
 }
 
 export class Equipment extends Item{
@@ -40,7 +50,7 @@ export class Equipment extends Item{
     }
 }
 
-export class Sword extends Equipment {
+export class Weapon extends Equipment {
 
     constructor(props) {
         super({ ...defaultSword, props })
@@ -58,5 +68,12 @@ export class Armor extends Equipment {
 
     constructor(props) {
         super({ ...defaultArmor, props })
+    }
+}
+
+export class Hat extends Equipment {
+
+    constructor(props) {
+        super({ ...defaultHat, props })
     }
 }

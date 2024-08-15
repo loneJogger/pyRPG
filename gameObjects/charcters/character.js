@@ -3,11 +3,11 @@ import { Equipment } from "../items/equipment.js"
 
 const DICE = 10
 const HARD_CAP = 255
-const SOFT_CAP = 50
 
 const defaults = {
     name: '!UNNAMED_CHAR!',
     level: 1,
+    experience: 0,
     char_class: '!NO_CLASS!',
     hp: { total: 10, current: 10 },
     ap: { total: 0, current: 0 },
@@ -77,6 +77,12 @@ export default class Character {
         this.props = { ...defaults, ...props }
     }
 
+    // todo: write quadradic for character level
+    getCurrentLevel() {
+        const { experience } = this.props
+        return Math.floor(1)
+    }
+
     setlevel (newLevel) {
         const { hp, ap } = this.props
         let { level } = this.props
@@ -96,16 +102,15 @@ export default class Character {
     getAttack () {
         const { attributes, equipment } = this.props
         const roll = randomInt(DICE)
-        const critMultiplier = randomInt(HARD_CAP) > HARD_CAP - attributes.luck ? 2 : 1
         if (equipment.main_hand) {
             const weaponBonus = Math.ceil(equipment.main_hand.damage)
             return { 
-                damage: (roll + Math.ciel(attributes.strength / 2) + weaponBonus) * critMultiplier, 
+                damage: (roll + Math.ciel(attributes.strength / 2) + weaponBonus) * this.getCritMultiplier(), 
                 element:  equipment.main_hand.element
             }
         } else {
             return { 
-                damage: (roll + Math.ciel(attributes.strength / 2)) * critMultiplier,
+                damage: (roll + Math.ciel(attributes.strength / 2)) * this.getCritMultiplier(),
                 element: '!NO_ELEMENT!'
             }
         }
@@ -139,6 +144,11 @@ export default class Character {
         const { attributes, equipment } = this.props
         const offHandDex = equipment.off_hand.dexterity || 0
         return randomInt(HARD_CAP) > HARD_CAP - attributes.dexterity + offHandDex ? true : false
+    }
+
+    getCritMultiplier () {
+        const { attributes } = this.props
+        return randomInt(HARD_CAP) > HARD_CAP - attributes.luck ? 2 : 1
     }
 
     execAttack () {}
