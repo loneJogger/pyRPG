@@ -7,40 +7,27 @@ const defaults = {
     char_classes: ['Knight']
 }
 
-const defaultSword = {
-    name: 'Iron Short Sword',
-    description: 'ATK + 2\nA simple iron sword. Standard issue for initiate level Knights of the Faith.',
+const defaultWeapon = {
     gear_type: 'main_hand',
-    element: 'slash',
-    value: 50,
-    damage: 2
+    damage: 0
 }
 
 const defaultShield = {
-    name: 'Wooden Round Shield',
-    description: 'DEF + 2 DEX + 1\nA light weight wooden shield bearing the crest of a nobel family.',
     gear_type: 'off_hand',
-    value: 25,
-    defense: 2,
-    dexterity: 1
+    defense: 0,
+    dexterity: 0
 }
 
 const defaultArmor = {
-    name: 'Old Mail',
-    description: 'DEF + 3\nAn old chain mail coat.',
     gear_type: 'body',
-    value: 25,
-    defense: 3,
+    defense: 0,
     spirit: 0
 }
 
 const defaultHat = {
-    name: 'Pointed Hat',
-    description: 'SPR + 1\nA dark pointed hat with a wide brim.',
     gear_type: 'head',
-    value: 20,
     defense: 0,
-    spirit: 1
+    spirit: 0
 }
 
 export class Equipment extends Item{
@@ -53,7 +40,7 @@ export class Equipment extends Item{
 export class Weapon extends Equipment {
 
     constructor(props) {
-        super({ ...defaultSword, props })
+        super({ ...defaultWeapon, props })
     }
 }
 

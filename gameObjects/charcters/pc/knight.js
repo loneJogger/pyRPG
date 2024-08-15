@@ -1,5 +1,6 @@
 import Character from '../character.js'
 import { Armor, Weapon, Shield } from '../../items/equipment.js'
+import equipmentData from '../../../data/equipment.js'
 import { UsableItem } from '../../items/item.js'
 
 const defaults = {
@@ -81,10 +82,10 @@ export class Knight extends Character {
             new UsableItem({ stackSize: 3 }), 
         ]
         equipment = {
-            main_hand: new Weapon(),
-            off_hand: new Shield(),
+            main_hand: new Weapon(equipmentData.weapons.swords[0]),
+            off_hand: new Shield(equipmentData.shields[0]),
             head: null,
-            body: new Armor(),
+            body: new Armor(equipmentData.armors[0]),
             feet: null,
             accessory_1: null,
             accessory_2: null,

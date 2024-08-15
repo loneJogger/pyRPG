@@ -1,5 +1,6 @@
 import Character from '../character.js'
 import { Weapon, Armor, Hat } from '../../items/equipment.js'
+import equipmentData from '../../../data/equipment.js'
 import { UsableItem } from '../../items/item.js'
 
 const defaults = {
@@ -82,25 +83,10 @@ export class Wizard extends Character {
             new UsableItem({ stackSize: 3 }), 
         ]
         equipment = {
-            main_hand: new Weapon({
-                name: 'Iron Dagger',
-                description: 'ATK + 1\nA small knife often used for self defense.',
-                gear_type: 'main_hand',
-                element: 'slash',
-                value: 20,
-                damage: 1
-            }),
+            main_hand: new Weapon(equipmentData.weapons.knives[0]),
             off_hand: null,
-            head: new Hat(),
-            body: new Armor({
-                name: 'Taveling Habit',
-                description: 'DEF + 2 SPR + 1\nThe thick wool garments of a venerated religious order.',
-                gear_type: 'body',
-                value: 50,
-                defense: 2,
-                spirit: 1
-
-            }),
+            head: new Hat(equipmentData.hats[0]),
+            body: new Armor(equipmentData.armors[1]),
             feet: null,
             accessory_1: null,
             accessory_2: null,
