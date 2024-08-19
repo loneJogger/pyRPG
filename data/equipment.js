@@ -3,7 +3,6 @@ export default {
         {
             name: 'Old Mail',
             description: 'DEF + 3\nAn old chain mail coat.',
-            gear_type: 'body',
             value: 25,
             defense: 3,
             spirit: 0
@@ -11,7 +10,6 @@ export default {
         {
             name: 'Taveling Habit',
             description: 'DEF + 2 SPR + 1\nThe thick wool garments of a venerated religious order.',
-            gear_type: 'body',
             value: 50,
             defense: 2,
             spirit: 1
@@ -22,7 +20,6 @@ export default {
         {
             name: 'Pointed Hat',
             description: 'SPR + 1\nA dark pointed hat with a wide brim.',
-            gear_type: 'head',
             value: 20,
             defense: 0,
             spirit: 1
@@ -32,7 +29,6 @@ export default {
         {
             name: 'Wooden Round Shield',
             description: 'DEF + 2 DEX + 1\nA light weight wooden shield bearing the crest of a nobel family.',
-            gear_type: 'off_hand',
             value: 25,
             defense: 2,
             dexterity: 1
@@ -43,7 +39,6 @@ export default {
             {
                 name: 'Iron Dagger',
                 description: 'ATK + 1\nA small knife often used for self defense.',
-                gear_type: 'main_hand',
                 element: 'slash',
                 value: 20,
                 damage: 1
@@ -53,7 +48,6 @@ export default {
             {
                 name: 'Iron Short Sword',
                 description: 'ATK + 2\nA simple iron sword. Standard issue for initiate level Knights of the Faith.',
-                gear_type: 'main_hand',
                 element: 'slash',
                 value: 50,
                 damage: 2

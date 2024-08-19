@@ -28,23 +28,17 @@ const defaults = {
         luk: { m: 0.5, b: 6 },  // lvl. 1:  7, lvl. 99:  56
     },
     resistences: {
-        fire: 0.875,
-        water: 1.0,
+        fire: 1.25,
+        water: 1.125,
         earth: 1.125,
-        air: 1.0,
-        light: 1.25,
-        dark: 0.875,
-        slash: 1.125,
-        blunt: 1.125,
-        shoot: 1.0
+        air: 1.125,
+        light: 0.75,
+        dark: 1.25,
+        slash: 0.875,
+        blunt: 0.875,
+        shoot: 0.875
     },
-    bonuses: [
-        {
-            name: 'Parry',
-            learn_level: 4,
-            description: ''
-        }
-    ],
+    bonuses: [],
     actions: [
         {
             name: 'Attack',
@@ -59,15 +53,19 @@ const defaults = {
             learn_level: 1
         },
         {
-            name: 'Chivalry',
-            learn_level: 2
+            name: 'Magic',
+            learn_level: 1
         }
     ],
     techniques: [
         {
-            name: 'Bodyguard',
+            name: 'Flame',
+            learn_level: 1
+        },
+        {
+            name: 'Darkness',
             learn_level: 2
-        }
+        },
     ]  
 }
 
@@ -93,4 +91,8 @@ export class Wizard extends Character {
             accessory_3: null,
         }
     }
+
+    execFlame() {}
+
+    execDarkness() {}
 }

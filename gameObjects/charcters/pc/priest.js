@@ -27,23 +27,17 @@ const defaults = {
         luk: { m: 0.5, b: 6 },  // lvl. 1:  7, lvl. 99:  56
     },
     resistences: {
-        fire: 0.875,
-        water: 1.0,
-        earth: 1.125,
+        fire: 1.0,
+        water: 1.125,
+        earth: 0.875,
         air: 1.0,
-        light: 1.25,
-        dark: 0.875,
+        light: 1.5,
+        dark: 0.75,
         slash: 1.125,
         blunt: 1.125,
         shoot: 1.0
     },
-    bonuses: [
-        {
-            name: 'Parry',
-            learn_level: 4,
-            description: ''
-        }
-    ],
+    bonuses: [],
     actions: [
         {
             name: 'Attack',
@@ -58,13 +52,17 @@ const defaults = {
             learn_level: 1
         },
         {
-            name: 'Chivalry',
-            learn_level: 2
+            name: 'Prayer',
+            learn_level: 1
         }
     ],
     techniques: [
         {
-            name: 'Bodyguard',
+            name: 'Lay Hands',
+            learn_level: 1
+        },
+        {
+            name: 'Bless',
             learn_level: 2
         }
     ]  
@@ -77,4 +75,8 @@ export class Priest extends Character {
     }
 
     setStartingGear() {}
+
+    execLayHands() {}
+
+    execBless() {}
 }

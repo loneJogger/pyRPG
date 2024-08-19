@@ -33,9 +33,9 @@ const defaults = {
         air: 1.0,
         light: 1.25,
         dark: 0.875,
-        slash: 1.125,
+        slash: 1.00,
         blunt: 1.125,
-        shoot: 1.0
+        shoot: 0.75
     },
     bonuses: [
         {
